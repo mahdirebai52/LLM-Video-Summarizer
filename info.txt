@@ -1,0 +1,12 @@
+FFmpeg is a powerful tool for handling audio/video files
+Extract audio from downloaded YouTube videos
+Convert audio to WAV format for speech recognition
+
+WAV is an uncompressed audio format that stores raw audio data (
+
+High quality (no compression loss)
+Large file sizes
+Compatible with most audio processing tools
+Preferred for speech recognition because it preserves all audio details
+
+)
