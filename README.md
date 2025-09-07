@@ -1,5 +1,5 @@
 # 🎬 AI-Powered Video to Text Converter  
-[Try it here 👉 AI Video Summarizer](https://llm-video-summarizer.netlify.app)
+[Try it here 👉 AI Video Summarizer](https://llm-videos-summarizer.netlify.app)
 
 A modern web application that converts **YouTube videos** into accurate **transcriptions** and **AI-generated summaries** using cutting-edge AI and web technologies.
 
@@ -97,3 +97,4 @@ A modern web application that converts **YouTube videos** into accurate **transc
 ✨ This project unites **AI, modern web development, and user-focused design** to make video content more **accessible, actionable, and insightful** across industries.  
 
 👉 [Explore the app now](https://llm-video-summarizer.netlify.app)
+
