@@ -8,8 +8,8 @@ import json
 import time
 import os
 import threading
+import gc  # Added for garbage collection
 from contextlib import contextmanager
-from video_processor import SimpleVideoToText
 
 app = Flask(__name__)
 CORS(app)
@@ -193,10 +193,15 @@ def process_video():
         if not video_url:
             return jsonify({'error': 'Video URL is required'}), 400
         
-        # Process video
+        # Process video - MEMORY OPTIMIZATION: Only import here to save memory
+        from video_processor import SimpleVideoToText
         converter = SimpleVideoToText()
         transcript, summary = converter.process_video(video_url)
         video_title, _ = converter.get_video_info(video_url)
+        
+        # Force garbage collection to free memory
+        del converter
+        gc.collect()
         
         if transcript and summary:
             # Save to database
@@ -246,7 +251,11 @@ def process_video_stream():
 
     def generate():
         audio_file = None
+        converter = None
         try:
+            # Import here to save memory
+            from video_processor import SimpleVideoToText
+            
             # Send initial status
             yield f"data: {json.dumps({'type': 'status', 'message': 'Starting video processing...'})}\n\n"
             
@@ -318,6 +327,13 @@ def process_video_stream():
                     os.remove(audio_file)
                 except:
                     pass
+            
+            # Free memory
+            if converter:
+                del converter
+            
+            # Force garbage collection
+            gc.collect()
             
             # Clean up any remaining temp files
             try:
@@ -575,7 +591,7 @@ if __name__ == '__main__':
     
     try:
         init_db()
-        print("🌐 Server starting on http://localhost:5000")
+        print("🌐 Server starting on http://0.0.0.0:5000")
         print("📊 Endpoints available:")
         print("   • POST /register - User registration")
         print("   • POST /login - User authentication") 
@@ -586,7 +602,8 @@ if __name__ == '__main__':
         print("   • GET /admin/detailed-stats - Detailed analytics")
         print("   • GET /health - Health check")
         print("=" * 50)
-        app.run(debug=True, port=5000, threaded=True)
+        port = int(os.environ.get("PORT", 5000))
+        app.run(host="0.0.0.0", port=port, debug=False)  
     except Exception as e:
         print(f"❌ Failed to start server: {e}")
         exit(1)
