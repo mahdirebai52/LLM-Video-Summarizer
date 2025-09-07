@@ -1,0 +1,13 @@
+Flask==2.3.3
+Flask-CORS==4.0.0
+bcrypt==4.0.1
+PyJWT==2.8.0
+torch==2.0.1
+transformers==4.33.2
+yt-dlp==2023.7.6
+langchain-ollama==0.1.0
+tqdm==4.66.1
+numpy==1.24.3
+scipy==1.11.2
+soundfile==0.12.1
+librosa==0.10.1
